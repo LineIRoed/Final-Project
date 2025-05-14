@@ -1,0 +1,13 @@
+.validation {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+  
+.valid {
+    color: #4caf50; /* green */
+}
+  
+.invalid {
+    color: #f44336; /* red */
+}
+  
