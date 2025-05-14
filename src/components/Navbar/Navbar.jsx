@@ -3,8 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../context/AuthContext.jsx"
 import styles from './Navbar.module.css'
 import Button from "../Buttons/Buttons.jsx"
+import { SearchContext } from '../SearchContext/SearchContext.jsx'
 
 export default function Navbar() {
+    const { searchQuery, setSearchQuery } = useContext(SearchContext)
     const { user, logout } = useContext(AuthContext)
     const navigate = useNavigate()
 
@@ -26,6 +28,8 @@ export default function Navbar() {
                     <input 
                         type="text"
                         placeholder="Search for Movie name..." 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         className={styles.search}
                     />
                     <Button className={styles.searchBtn}>Search</Button>

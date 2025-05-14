@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import Banner from '../../components/Banner/Banner'
 import MovieCard from '../../components/MovieCard/MovieCard'
 import styles from './Home.module.css'
 import { fetchPopularMovies, fetchMoviesByGenre, fetchGenres } from '../../Services/tmbd'
 import Button from '../../components/Buttons/Buttons'
+import { SearchContext } from '../../components/SearchContext/SearchContext'
 
 export default function Home() {
   const [popular, setPopular] = useState([])
   const [movies, setMovies] = useState([])
   const [genres, setGenres] = useState([])
   const [selectedGenre, setSelectedGenre] = useState('All')
+
+  const { searchQuery } = useContext(SearchContext)
+
+  const filtered = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   useEffect(() => {
     const loadInitial = async () => {
@@ -67,7 +74,7 @@ export default function Home() {
         ))}
       </div>
       <div className={styles.movieCardGrid}>
-        {movies.map((movie) => (
+        {filtered.map((movie) => (
           <MovieCard
             key={movie.id}
             movie={{
