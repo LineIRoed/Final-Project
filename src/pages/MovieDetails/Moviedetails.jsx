@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import styles from './MovieDetails.module.css'
+import Button from '../../components/Buttons/Buttons'
 
 const API_KEY = '4e461f739d78e77d2d7f16407e3db2c7'
 
 export default function MovieDetails() {
   const { id } = useParams()
   const [movie, setMovie] = useState(null)
+  
+  const navigate = useNavigate()
+
+    const handleBack = () => {
+        navigate(-1) // goes back to previous page
+    }
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -36,6 +43,7 @@ export default function MovieDetails() {
         <p><strong>Release Date:</strong> {movie.release_date}</p>
         <p><strong>Rating:</strong> ⭐ {movie.vote_average}/10</p>
       </div>
+      <Button className={styles.backButton} onClick={handleBack}>← Back</Button>
     </div>
   )
 }
