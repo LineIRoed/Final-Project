@@ -12,6 +12,9 @@ export default function Navbar() {
         logout()
         navigate('/login')
     }
+    const handleSignIn = () => {
+        navigate('/login')
+      }
 
     return (
         <nav className={styles.navbarContainer}>
@@ -36,9 +39,9 @@ export default function Navbar() {
 
             <div className={styles.right}>
                 {user ? (
-                    <button onClick={handleLogout} className={styles.signInOut}>Sign Out</button>
+                    <Button onClick={handleLogout} className={styles.signInOut}>Sign Out</Button>
                 ) : (
-                    <Link to="/login" className={styles.signInOut}>Sign In</Link> 
+                    <Button onClick={handleSignIn} className={styles.signInOut}>Sign in</Button>
                 )}
             </div>
         </nav>

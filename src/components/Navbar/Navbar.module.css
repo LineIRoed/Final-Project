@@ -70,9 +70,10 @@
     align-items: center;
 }
 .signInOut {
-    color: var(--color-white);
+    background-color: var(--color-magenta);
+    padding: 5px 10px 5px 10px;
+    border: 1px solid var(--color-magenta);
 }
 .signInOut:hover {
-    color: var(--color-white-hover);
-    transition: color 0.2s ease;
+    background-color: var(--color-magenta-hover);
 }

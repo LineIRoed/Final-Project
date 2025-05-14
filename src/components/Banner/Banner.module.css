@@ -1,0 +1,18 @@
+.banner {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+}
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+.titleOverlay {
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+    color: var(--color-magenta);
+}
+  
