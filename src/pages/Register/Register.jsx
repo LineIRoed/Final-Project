@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { AuthContext } from '../../components/context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
 import styles from './Register.module.css'
+import Button from '../../components/Buttons/Buttons'
 
 const getPasswordValidation = (password) => {
     return {
@@ -58,70 +59,68 @@ export default function Register() {
   
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>Create Account</h2>
-        {error && <p className={styles.error}>{error}</p>}
+    <div className={styles.registerContainer}>
+        <div className={styles.formContainer}>
+            <form onSubmit={handleSubmit} className={styles.registerForm}>
+                <h2 className={styles.formHeader}>Create Account</h2>
+                {error && <p className={styles.error}>{error}</p>}
 
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+                <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
 
-        <input
-          type="text"
-          placeholder="Profile Image URL (optional)"
-          value={profileImage}
-          onChange={(e) => setProfileImage(e.target.value)}
-        />
+                <input
+                    type="text"
+                    placeholder="Profile Image URL (optional)"
+                    value={profileImage}
+                    onChange={(e) => setProfileImage(e.target.value)}
+                />
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <div className={styles.validation}>
-            <p className={validation.length ? styles.valid : styles.invalid}>
-                • At least 8 characters
-            </p>
-             <p className={validation.uppercase ? styles.valid : styles.invalid}>
-                • Contains an uppercase letter
-            </p>
-            <p className={validation.symbol ? styles.valid : styles.invalid}>
-                • Contains a symbol (e.g. @, #, !)
-            </p>
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <div className={styles.validation}>
+                    <p className={validation.length ? styles.valid : styles.invalid}>
+                        • At least 8 characters
+                    </p>
+                    <p className={validation.uppercase ? styles.valid : styles.invalid}>
+                        • Contains an uppercase letter
+                    </p>
+                    <p className={validation.symbol ? styles.valid : styles.invalid}>
+                        • Contains a symbol (e.g. @, #, !)
+                    </p>
+                </div>
+
+
+                <Button type="submit" disabled={isLoading} className={styles.registerBtn}>
+                    {isLoading ? 'Registering...' : 'Register'}
+                </Button>
+
+                <p className={styles.LogIn}>
+                    Already have an account? <br/> <Link to="/login" className={styles.logInLink}>Login here</Link>
+                </p>
+            </form>
         </div>
-
-
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Registering...' : 'Register'}
-        </button>
-
-        <p className={styles.rules}>
-          Password must be at least 8 characters, include an uppercase letter, and a symbol.
-        </p>
-
-        <p className={styles.link}>
-          Already have an account? <Link to="/login">Login here</Link>
-        </p>
-      </form>
     </div>
   )
 }

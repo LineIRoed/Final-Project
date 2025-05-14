@@ -1,0 +1,78 @@
+.navbarContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    background-color: var(--color-black);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--padding-small);
+}
+
+/* -------- */
+
+.left {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+    justify-content: center;
+    align-items: center;
+}
+.logo {
+    width: 180px;
+    height: auto;
+}
+
+/* -------- */
+
+.searchContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+}
+.search {
+    width: 300px;
+    height: 1.875rem;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-magenta);
+    padding: var(--padding-small);
+    border-radius: 10px;
+}
+.searchBtn {
+    background-color: var(--color-magenta);
+    padding: 5px 10px 5px 10px;
+    border: 1px solid var(--color-magenta);
+}
+.searchBtn:hover {
+    background-color: var(--color-magenta-hover);
+}
+
+/* -------- */
+
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+}
+.link {
+    color: var(--color-white);
+}
+.link:hover {
+    color: var(--color-white-hover);
+    transition: color 0.2s ease;
+}
+
+/* -------- */
+
+.right {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+}
+.signInOut {
+    color: var(--color-white);
+}
+.signInOut:hover {
+    color: var(--color-white-hover);
+    transition: color 0.2s ease;
+}

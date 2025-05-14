@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../context/AuthContext.jsx"
 import styles from './Navbar.module.css'
+import Button from "../Buttons/Buttons.jsx"
 
 export default function Navbar() {
     const { user, logout } = useContext(AuthContext)
@@ -13,9 +14,19 @@ export default function Navbar() {
     }
 
     return (
-        <nav className={styles.navbar}>
+        <nav className={styles.navbarContainer}>
             <div className={styles.left}>
-                <Link to="/" className={styles.logo}>Flixio</Link>
+                <Link to="/">
+                    <img src="/logo_final-project.svg" alt="Flixio logo" className={styles.logo} />
+                </Link>
+                <div className={styles.searchContainer}>
+                    <input 
+                        type="text"
+                        placeholder="Search for Movie name..." 
+                        className={styles.search}
+                    />
+                    <Button className={styles.searchBtn}>Search</Button>
+                </div>
                 <div className={styles.links}>
                     <Link to="/" className={styles.link}>Home</Link> 
                     <Link to="/watchlist" className={styles.link}>Watchlist</Link> 
@@ -24,15 +35,10 @@ export default function Navbar() {
             </div>
 
             <div className={styles.right}>
-                <input 
-                    type="text"
-                    placeholder="Search for Movie name..." 
-                    className={styles.search}
-                />
                 {user ? (
-                    <button onClick={handleLogout} className={styles.button}>Sign Out</button>
+                    <button onClick={handleLogout} className={styles.signInOut}>Sign Out</button>
                 ) : (
-                    <Link to="/login" className={styles.button}>Sign In</Link> 
+                    <Link to="/login" className={styles.signInOut}>Sign In</Link> 
                 )}
             </div>
         </nav>

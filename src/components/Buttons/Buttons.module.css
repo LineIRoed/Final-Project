@@ -1,0 +1,9 @@
+Button {
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: var(--font-medium);
+}
+Button:hover {
+    transition: background-color 0.2s ease;
+}

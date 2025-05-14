@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { AuthContext } from '../../components/context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
 import styles from './Login.module.css'
+import Button from '../../components/Buttons/Buttons'
 
 export default function Login() {
   const { login } = useContext(AuthContext)
@@ -32,33 +33,35 @@ export default function Login() {
   }
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>Login</h2>
-        {error && <p className={styles.error}>{error}</p>}
+    <div className={styles.logInContainer}>
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit} className={styles.logInForm}>
+          <h2>Login</h2>
+          {error && <p className={styles.error}>{error}</p>}
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Login'}
-        </button>
+          <Button className={styles.loginBtn} type="submit" disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'Login'}
+          </Button>
 
-        <p className={styles.link}>
-          Don’t have an account? <Link to="/register">Register here</Link>
-        </p>
-      </form>
+          <p className={styles.register}>
+            Don’t have an account? <br/> <Link to="/register" className={styles.registerLink}>Register here</Link>
+          </p>
+        </form>
+      </div>
     </div>
   )
 }
