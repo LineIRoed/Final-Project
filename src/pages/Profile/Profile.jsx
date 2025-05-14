@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { AuthContext } from '../../components/context/AuthContext'
+import { AuthContext } from '../../components/AuthContext/AuthContext'
 import styles from './Profile.module.css'
 
 export default function Profile() {

@@ -4,20 +4,22 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
+  setPersistence,
+  browserLocalPersistence,
 } from 'firebase/auth'
 import {
   doc,
   setDoc,
   getDoc,
 } from 'firebase/firestore'
-import { auth, db } from '../../firebaseConfig'  // ✅ Make sure this path is correct
+import { auth, db } from '../../firebaseConfig'
 
 export const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  // Track auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
@@ -31,12 +33,17 @@ export function AuthProvider({ children }) {
       } else {
         setUser(null)
       }
+      setLoading(false)
     })
 
     return () => unsubscribe()
   }, [])
 
-  // Register a new user
+  const login = async (email, password) => {
+    await setPersistence(auth, browserLocalPersistence) // Persist across sessions
+    return signInWithEmailAndPassword(auth, email, password)
+  }
+
   const register = async (email, password, profile) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     const uid = userCredential.user.uid
@@ -47,20 +54,14 @@ export function AuthProvider({ children }) {
       email: email,
     })
 
-    // onAuthStateChanged will update user
+    // onAuthStateChanged will set user
   }
 
-  // Login existing user
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password)
-  }
-
-  // Logout
   const logout = () => signOut(auth)
 
   return (
     <AuthContext.Provider value={{ user, login, register, logout }}>
-      {children}
+      {loading ? <p>Loading...</p> : children}
     </AuthContext.Provider>
   )
 }
