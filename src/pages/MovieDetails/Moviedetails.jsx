@@ -62,43 +62,41 @@ export default function MovieDetails() {
 
   return (
     <div className={styles.movieContainer}>
-      <img
-        className={styles.poster}
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
-      />
-      <div className={styles.movieInfo}>
-        <h1>{movie.title}</h1>
-        <p><strong>Overview:</strong> {movie.overview}</p>
-        <p><strong>Genres:</strong> {movie.genres.map(g => g.name).join(', ')}</p>
-        <p><strong>Release Date:</strong> {movie.release_date}</p>
-        <p><strong>Rating:</strong> ⭐ {movie.vote_average}/10</p>
-      </div>
-
-      {trailer && (
-        <div className={styles.trailerContainer}>
-          <h2>Watch the Trailer</h2>
-          <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${trailer.key}`}
-            title={movie.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+        <img
+            className={styles.poster}
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+        />
+        <div className={styles.infoContainer}>
+            <div className={styles.movieInfo}>
+                <h1>{movie.title}</h1>
+                <p><strong>Overview:</strong> {movie.overview}</p>
+                <p><strong>Genres:</strong> {movie.genres.map(g => g.name).join(', ')}</p>
+                <p><strong>Release Date:</strong> {movie.release_date}</p>
+                <p><strong>Rating:</strong> ⭐ {movie.vote_average}/10</p>
+            </div>
+            <div className={styles.addBtnContainer}>
+                <Button className={styles.addBtn} onClick={handleAddToWatchlist}>
+                    Add to Watchlist
+                </Button>
+            </div>
+            {trailer && (
+            <div className={styles.trailerContainer}>
+                <h2 className={styles.trailerHeading}>Watch the Trailer</h2>
+                <iframe
+                    className={styles.movieTrailer}
+                    src={`https://www.youtube.com/embed/${trailer.key}`}
+                    title={movie.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+            )}
         </div>
-      )}
-
-      <div className={styles.addBtnContainer}>
-        <Button className={styles.addButton} onClick={handleAddToWatchlist}>
-          Add to Watchlist
-        </Button>
-      </div>
-
-      <div className={styles.backBtnContainer}>
-        <Button className={styles.backButton} onClick={handleBack}>← Back</Button>
-      </div>
+        <div className={styles.backBtnContainer}>
+            <Button className={styles.backButton} onClick={handleBack}>← Back</Button>
+        </div>
     </div>
   )
 }
