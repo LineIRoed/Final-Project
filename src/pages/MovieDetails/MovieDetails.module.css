@@ -1,0 +1,40 @@
+.movieContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: var(--padding-small);
+    color: var(--color-white);
+    background-color: var(--color-lightBlack);
+    gap: 2rem;
+    width: 100%;
+    height: 90vh;
+    justify-content: space-between;
+}
+  
+.poster {
+    width: auto;
+    height: 80vh;
+    border-radius: 10px;
+}
+  
+.movieInfo {
+    max-width: 40%;
+}
+  
+.movieInfo h1 {
+    margin-bottom: 1rem;
+}
+  
+.movieInfo p {
+    margin: 0.5rem 0;
+}
+
+.backButton {
+    background-color: var(--color-magenta);
+    padding: 5px 10px 5px 10px;
+    border: 1px solid var(--color-magenta);
+}
+.backButton:hover {
+    background-color: var(--color-magenta-hover);
+}
+    
