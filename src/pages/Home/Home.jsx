@@ -78,6 +78,7 @@ export default function Home() {
           <MovieCard
             key={movie.id}
             movie={{
+              id: movie.id,
               title: movie.title,
               poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
             }}

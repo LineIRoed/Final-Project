@@ -8,6 +8,7 @@ import Register from './pages/Register/Register'
 import Watchlist from './pages/Watchlist/Watchlist'
 import Profile from './pages/Profile/Profile'
 import styles from "./components/Navbar/Navbar.module.css"
+import MovieDetails from './pages/MovieDetails/Moviedetails'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
 
           {/* Protected Routes */}
           <Route
