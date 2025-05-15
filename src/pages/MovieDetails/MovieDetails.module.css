@@ -35,26 +35,9 @@
 
 /* ------- */
 
-.backButton {
-    background-color: var(--color-magenta);
-    padding: 5px 10px 5px 10px;
-    border: 1px solid var(--color-magenta);
-}
-.backButton:hover {
-    background-color: var(--color-magenta-hover);
-}
-
-/* --------- */
-
 .addBtn {
     margin-top: 2rem;
     margin-bottom: 1.5rem;
-    background-color: var(--color-magenta);
-    padding: 5px 10px 5px 10px;
-    border: 1px solid var(--color-magenta);
-}
-.addBtn:hover {
-    background-color: var(--color-magenta-hover);
 }
 
 /* ---------- */

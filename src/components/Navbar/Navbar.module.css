@@ -6,6 +6,8 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--padding-small);
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 /* -------- */
@@ -37,15 +39,6 @@
     padding: var(--padding-small);
     border-radius: 10px;
 }
-.searchBtn {
-    background-color: var(--color-magenta);
-    padding: 5px 10px 5px 10px;
-    border: 1px solid var(--color-magenta);
-}
-.searchBtn:hover {
-    background-color: var(--color-magenta-hover);
-}
-
 /* -------- */
 
 .links {
@@ -68,12 +61,4 @@
     flex-direction: row; 
     justify-content: center;
     align-items: center;
-}
-.signInOut {
-    background-color: var(--color-magenta);
-    padding: 5px 10px 5px 10px;
-    border: 1px solid var(--color-magenta);
-}
-.signInOut:hover {
-    background-color: var(--color-magenta-hover);
 }

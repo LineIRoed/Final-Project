@@ -4,12 +4,19 @@ import { useNavigate, Link } from 'react-router-dom'
 import styles from './Register.module.css'
 import Button from '../../components/Buttons/Buttons'
 
+const profileImageOptions = [
+  '/avatars/avatar1.png',
+  '/avatars/avatar2.png',
+  '/avatars/avatar3.png',
+  '/avatars/avatar4.png',
+]
+
 const getPasswordValidation = (password) => {
-    return {
-      length: password.length >= 8,
-      uppercase: /[A-Z]/.test(password),
-      symbol: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password),
-    }
+  return {
+    length: password.length >= 8,
+    uppercase: /[A-Z]/.test(password),
+    symbol: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password),
+  }
 }
 
 export default function Register() {
@@ -20,10 +27,22 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
-  const [profileImage, setProfileImage] = useState('')
+  const [profileImage, setProfileImage] = useState(profileImageOptions[0])
   const [error, setError] = useState('')
   const validation = getPasswordValidation(password)
   const [isLoading, setIsLoading] = useState(false)
+
+  // Created using chatGpt
+  const generateAvatarUrl = (seed) =>
+    `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
+
+
+  const randomSeed = () =>
+    Math.random().toString(36).substring(2, 10) // 8-char random string
+
+  const [avatarSeed, setAvatarSeed] = useState(randomSeed())
+  const avatarUrl = generateAvatarUrl(avatarSeed)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -48,7 +67,10 @@ export default function Register() {
 
     setIsLoading(true)
     try {
-      await register(email, password, { name, profileImage })
+      await register(email, password, {
+        name,
+        profileImage: avatarUrl,
+      })
       navigate('/')
     } catch (err) {
       setError(err.message)
@@ -65,18 +87,22 @@ export default function Register() {
                 <h2 className={styles.formHeader}>Create Account</h2>
                 {error && <p className={styles.error}>{error}</p>}
 
+                <div className={styles.avatarContainer}>
+                  <img src={avatarUrl} alt="avatar" className={styles.avatarPreview} />
+                  <Button
+                    type="button"
+                    onClick={() => setAvatarSeed(randomSeed())}
+                    className={styles.shuffleButton}
+                  >
+                    Shuffle Avatar
+                  </Button>
+                </div>
+
                 <input
                     type="text"
                     placeholder="Full Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                />
-
-                <input
-                    type="text"
-                    placeholder="Profile Image URL (optional)"
-                    value={profileImage}
-                    onChange={(e) => setProfileImage(e.target.value)}
                 />
 
                 <input

@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
       }
       setLoading(false)
     })
-
+  
     return () => unsubscribe()
   }, [])
 
@@ -60,8 +60,9 @@ export function AuthProvider({ children }) {
   const logout = () => signOut(auth)
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
       {loading ? <p>Loading...</p> : children}
     </AuthContext.Provider>
+
   )
 }

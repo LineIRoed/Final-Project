@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
 import styles from './Login.module.css'
@@ -17,20 +17,41 @@ export default function Login() {
     e.preventDefault()
 
     if (!email || !password) {
-      setError('Please fill out all fields.')
+      setError('Please fill out both email and password')
       return
     }
 
     setIsLoading(true)
     try {
       await login(email, password)
-      navigate('/')
+      setTimeout(() => navigate('/'), 500)
     } catch (err) {
-      setError(err.message)
+      switch (err.code) {
+        case 'auth/invalid-email':
+          setError('Please enter a valid email address.')
+          break
+        case 'auth/user-not-found':
+          setError('No account found with this email.')
+          break
+        case 'auth/wrong-password':
+          setError('Incorrect password. Please try again.')
+          break
+        case 'auth/too-many-requests':
+          setError('Too many login attempts. Please try again later.')
+          break
+        default:
+          setError('Login failed. Please try again.')
+      }
     } finally {
       setIsLoading(false)
     }
   }
+
+  const { user } = useContext(AuthContext)
+
+  useEffect(() => {
+    if (user) navigate('/')
+  }, [user])
 
   return (
     <div className={styles.logInContainer}>

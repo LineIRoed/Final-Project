@@ -64,3 +64,12 @@ input {
     color: var(--color-white-hover);
     transition: color 0.2s ease;
 }
+
+/* ---------- */
+
+.error {
+    color: #FF0D0D;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
