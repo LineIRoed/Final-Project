@@ -1,13 +1,16 @@
 import { useEffect, useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { getWatchlist, addToWatchlist, removeFromWatchlist } from '../../Services/watchlistService.js'
 import styles from './Watchlist.module.css'
+import Button from '../../components/Buttons/Buttons.jsx'
 
 export default function Watchlist() {
   const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
-  const [updatingId, setUpdatingId] = useState(null) // For disabling buttons while updating
+  const [updatingId, setUpdatingId] = useState(null)
 
   useEffect(() => {
     if (!user) {
@@ -23,10 +26,6 @@ export default function Watchlist() {
     }
     fetchWatchlist()
   }, [user])
-
-  if (!user) return <p>Please log in to see your watchlist.</p>
-  if (loading) return <p>Loading your watchlist...</p>
-  if (movies.length === 0) return <p>Your watchlist is empty.</p>
 
   const handleToggle = async (movie) => {
     setUpdatingId(movie.id)
@@ -46,25 +45,38 @@ export default function Watchlist() {
     setUpdatingId(null)
   }
 
+  if (!user) return <p>Please log in to see your watchlist.</p>
+  if (loading) return <p>Loading your watchlist...</p>
+
   return (
-    <div className={styles.container}>
+    <div className={styles.watchlistContainer}>
       <h2>Your Watchlist</h2>
-      <div className={styles.grid}>
-        {movies.map((movie) => (
-          <div key={movie.id} className={styles.card}>
-            <img src={movie.poster} alt={movie.title} className={styles.poster} />
-            <h3>{movie.title}</h3>
-            <button
-              disabled={updatingId === movie.id}
-              className={styles.watchlistBtn}
-              onClick={() => handleToggle(movie)}
-              aria-label={movies.find(m => m.id === movie.id) ? 'Remove from watchlist' : 'Add to watchlist'}
-            >
-              {movies.find(m => m.id === movie.id) ? '❤️' : '🤍'}
-            </button>
-          </div>
-        ))}
-      </div>
+
+      {movies.length === 0 ? (
+        <div className={styles.emptyState}>
+          <h3>Your watchlist is empty</h3>
+          <p className={styles.subtitle}>Add movies to your watchlist and they'll appear here.</p>
+          <Button onClick={() => navigate('/')} className={styles.exploreBtn}>
+            Browse Movies
+          </Button>
+        </div>
+      ) : (
+        <div className={styles.watchlistGrid}>
+          {movies.map((movie) => (
+            <div key={movie.id} className={styles.watchlistCard}>
+              <img src={movie.poster} alt={movie.title} className={styles.movieImg} />
+              <h3>{movie.title}</h3>
+              <Button
+                disabled={updatingId === movie.id}
+                className={styles.watchlistBtn}
+                onClick={() => handleToggle(movie)}
+              >
+                {updatingId === movie.id ? '...' : '❤️'}
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
