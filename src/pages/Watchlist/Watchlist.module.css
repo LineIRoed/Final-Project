@@ -18,19 +18,24 @@
     background: var(--color-black);
     border-radius: 10px;
     padding: 0.5rem;
-    text-align: center;
     position: relative;
     transition: transform 0.2s;
-    color: var(--color-white-hover);
 }
 .watchlistCard:hover {
     transform: scale(1.05);
 }
-  
+
+.linkCardContainer {
+    text-align: center;
+    color: var(--color-white-hover);
+}
+
 .movieImg {
     width: 100%;
     border-radius: 6px;
 }
+
+/* ------ */
   
 .watchlistBtn {
     position: absolute;

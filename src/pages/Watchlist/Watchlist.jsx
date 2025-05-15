@@ -4,6 +4,7 @@ import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { getWatchlist, addToWatchlist, removeFromWatchlist } from '../../Services/watchlistService.js'
 import styles from './Watchlist.module.css'
 import Button from '../../components/Buttons/Buttons.jsx'
+import { Link } from 'react-router-dom'
 
 export default function Watchlist() {
   const { user } = useContext(AuthContext)
@@ -63,14 +64,18 @@ export default function Watchlist() {
       ) : (
         <div className={styles.watchlistGrid}>
           {movies.map((movie) => (
-            <div key={movie.id} className={styles.watchlistCard}>
-              <img src={movie.poster} alt={movie.title} className={styles.movieImg} />
-              <h3>{movie.title}</h3>
+            <div className={styles.watchlistCard}>
+              <Link to={`/movie/${movie.id}`} key={movie.id} className={styles.linkCard}>
+                <div className={styles.linkCardContainer}>
+                  <img src={movie.poster} alt={movie.title} className={styles.movieImg} />
+                  <h3>{movie.title}</h3>
+                </div>
+              </Link>
               <Button
                 disabled={updatingId === movie.id}
                 className={styles.watchlistBtn}
                 onClick={() => handleToggle(movie)}
-              >
+                >
                 {updatingId === movie.id ? '...' : '❤️'}
               </Button>
             </div>
