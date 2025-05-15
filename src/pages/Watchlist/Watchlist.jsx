@@ -1,13 +1,14 @@
 import { useEffect, useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { getWatchlist, addToWatchlist, removeFromWatchlist } from '../../Services/watchlistService.js'
+import { SearchContext } from '../../components/SearchContext/SearchContext'
 import styles from './Watchlist.module.css'
 import Button from '../../components/Buttons/Buttons.jsx'
-import { Link } from 'react-router-dom'
 
 export default function Watchlist() {
   const { user } = useContext(AuthContext)
+  const { searchQuery } = useContext(SearchContext)
   const navigate = useNavigate()
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
@@ -46,6 +47,10 @@ export default function Watchlist() {
     setUpdatingId(null)
   }
 
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
   if (!user) return <p>Please log in to see your watchlist.</p>
   if (loading) return <p>Loading your watchlist...</p>
 
@@ -61,11 +66,16 @@ export default function Watchlist() {
             Browse Movies
           </Button>
         </div>
+      ) : filteredMovies.length === 0 ? (
+        <div className={styles.emptyState}>
+          <h3>No results found</h3>
+          <p className={styles.subtitle}>Try searching for a different movie title.</p>
+        </div>
       ) : (
         <div className={styles.watchlistGrid}>
-          {movies.map((movie) => (
-            <div className={styles.watchlistCard}>
-              <Link to={`/movie/${movie.id}`} key={movie.id} className={styles.linkCard}>
+          {filteredMovies.map((movie) => (
+            <div className={styles.watchlistCard} key={movie.id}>
+              <Link to={`/movie/${movie.id}`} className={styles.linkCard}>
                 <div className={styles.linkCardContainer}>
                   <img src={movie.poster} alt={movie.title} className={styles.movieImg} />
                   <h3>{movie.title}</h3>
@@ -75,7 +85,7 @@ export default function Watchlist() {
                 disabled={updatingId === movie.id}
                 className={styles.watchlistBtn}
                 onClick={() => handleToggle(movie)}
-                >
+              >
                 {updatingId === movie.id ? '...' : '❤️'}
               </Button>
             </div>

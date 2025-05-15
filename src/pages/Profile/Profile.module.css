@@ -10,7 +10,7 @@
 .profileContainer {
     background-color: var(--color-magenta);
     width: 50%;
-    height: 75vh;
+    height: 80vh;
     border-radius: 20px;
     display: flex;
     flex-direction: column;

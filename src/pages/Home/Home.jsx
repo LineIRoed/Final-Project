@@ -14,6 +14,7 @@ export default function Home() {
 
   const { searchQuery } = useContext(SearchContext)
 
+  // Filter movies by search query (case-insensitive)
   const filtered = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -48,7 +49,7 @@ export default function Home() {
     }
   }
 
-  // If data is not yet loaded
+  // Show loading state if data isn't ready
   if (!popular.length || !genres.length || !movies.length) {
     return <div>Loading...</div>
   }
@@ -73,18 +74,27 @@ export default function Home() {
           </Button>
         ))}
       </div>
-      <div className={styles.movieCardGrid}>
-        {filtered.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            movie={{
-              id: movie.id,
-              title: movie.title,
-              poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            }}
-          />
-        ))}
-      </div>
+
+      {filtered.length === 0 ? (
+        <div className={styles.emptyState}>
+          <h3>No results found</h3>
+          <p className={styles.subtitle}>Try searching for another movie title or change the genre.</p>
+        </div>
+      ) : (
+        <div className={styles.movieCardGrid}>
+          {filtered.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              movie={{
+                id: movie.id,
+                title: movie.title,
+                poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
+

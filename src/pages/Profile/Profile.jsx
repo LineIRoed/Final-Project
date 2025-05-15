@@ -11,6 +11,11 @@ const avatarOptions = [
   'https://api.dicebear.com/7.x/adventurer/svg?seed=avatar2',
   'https://api.dicebear.com/7.x/adventurer/svg?seed=avatar3',
   'https://api.dicebear.com/7.x/adventurer/svg?seed=avatar4',
+  'https://api.dicebear.com/7.x/adventurer/svg?seed=ninjabear',
+  'https://api.dicebear.com/7.x/adventurer/svg?seed=astrocat',
+  'https://api.dicebear.com/7.x/adventurer/svg?seed=moonwalker',
+  'https://api.dicebear.com/7.x/adventurer/svg?seed=cyberduck',
+  'https://api.dicebear.com/7.x/adventurer/svg?seed=robotron',
 ]
 
 export default function Profile() {

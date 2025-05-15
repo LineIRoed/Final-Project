@@ -2,6 +2,7 @@
 .mainContainer {
     padding: 1rem 2rem;
     background-color: var(--color-lightBlack);
+    height: 100%
 }
 /* filter buttons   */
 .filterBtnContainer {
@@ -21,5 +22,20 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1rem;
+}
+
+/* ------- */
+
+.emptyState {
+    text-align: center;
+    margin-top: 4rem;
+    color: #ccc;
+    height: 15vh;
+}
+  
+.subtitle {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: #888;
 }
   
