@@ -1,0 +1,181 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-lightBlack);
+    height: 90vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.profileContainer {
+    background-color: var(--color-magenta);
+    width: 50%;
+    height: 75vh;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-white);
+    padding: var(--padding-small);
+}
+.profileContentContainer { 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: top;
+    width: 90%;
+    padding-top: var(--padding-small);
+}
+
+/* -------- */
+  
+.containerAvatar {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    border: 2px solid var(--color-white-hover);
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 2px solid var(--color-white-hover);
+}
+  
+.avatarOptions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+  
+.avatarOption {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+}
+  
+.avatarOption:hover {
+    border-color: var(--color-white-hover);
+}
+  
+.selected {
+    border-color: var(--color-white);
+}
+
+/* -------- */
+  
+.containerInfo {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    border: 1px solid var(--color-white-hover);
+    padding: 1rem;
+}
+.liContainer {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+}
+.infoTitle {
+    font-size: var(--font-medium);
+}
+
+/* ---------- */
+
+.ageInputContainer {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  
+.input {
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    width: 50%;
+    border: 2px solid var(--color-white-hover);
+}
+
+.displayAge {
+    margin-top: -0.5rem;
+    text-align: center;
+}
+
+/* --------- */
+
+.passwordContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--padding-small);
+    gap: 0.5rem;
+}
+.passwordInputContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.passwordInput {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    width: 100%;
+    border: 2px solid var(--color-white-hover);
+}
+.passwordBtn {
+    margin-top: 0.5rem;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-white);
+}
+.passwordBtn:hover {
+    background-color: var(--color-white-hover);
+}
+
+/* ---------- */
+
+.success {
+    color: #4caf50;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+  
+.error {
+    color: #f44336;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+/* -------- */
+
+.saveBtn {
+    margin-top: 1.5rem;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-white);
+    
+}
+.saveBtn:hover {
+    background-color: var(--color-white-hover);
+}
+  

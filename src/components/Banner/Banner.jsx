@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import styles from './Banner.module.css'
-
 export default function Banner({ movies }) {
-  const [index, setIndex] = useState(0)
+  
+  const [index, setIndex] = useState(0) // <-- Add this line!
 
   // Early return for loading state
   if (!movies || movies.length === 0) {

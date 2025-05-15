@@ -1,37 +1,44 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import styles from './MovieDetails.module.css'
 import Button from '../../components/Buttons/Buttons'
+import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { db } from '../../firebaseConfig'; // Import the Firestore instance
-import { collection, addDoc } from 'firebase/firestore'; // Firestore methods
+import { doc, setDoc } from 'firebase/firestore'; // Firestore methods
 
 const API_KEY = '4e461f739d78e77d2d7f16407e3db2c7'
 
 export default function MovieDetails() {
+    const { user } = useContext(AuthContext)
   const { id } = useParams()
   const [movie, setMovie] = useState(null)
   const [trailer, setTrailer] = useState(null)
 
   const handleAddToWatchlist = async () => {
-    if (!movie) return; // Ensure movie data is loaded
-
+    if (!user) {
+      alert('Please log in to add movies to your watchlist.')
+      return
+    }
+  
     const movieData = {
+      id: movie.id,
       title: movie.title,
       overview: movie.overview,
-      poster_path: movie.poster_path,
+      poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
       release_date: movie.release_date,
       vote_average: movie.vote_average,
     }
-    
+  
     try {
-      // Add movie to Firestore (assuming 'watchlist' is your collection)
-      await addDoc(collection(db, 'watchlist'), movieData);
-      alert('Movie added to your watchlist!');
+      const docRef = doc(db, 'users', user.uid, 'watchlist', movie.id.toString())
+      await setDoc(docRef, movieData)
+      alert('Movie added to your watchlist!')
     } catch (error) {
-      console.error('Error adding movie to Firestore: ', error);
-      alert('Failed to add movie to watchlist.');
+      console.error('Error adding movie to watchlist:', error)
+      alert('Failed to add movie to watchlist.')
     }
   }
+  
 
   const navigate = useNavigate()
 
