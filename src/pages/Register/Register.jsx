@@ -32,13 +32,13 @@ export default function Register() {
   const validation = getPasswordValidation(password)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Created using chatGpt
+  // Avatar selection has been created using chatGpt
   const generateAvatarUrl = (seed) =>
     `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
 
 
   const randomSeed = () =>
-    Math.random().toString(36).substring(2, 10) // 8-char random string
+    Math.random().toString(36).substring(2, 10)
 
   const [avatarSeed, setAvatarSeed] = useState(randomSeed())
   const avatarUrl = generateAvatarUrl(avatarSeed)

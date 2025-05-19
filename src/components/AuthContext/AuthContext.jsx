@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = async (email, password) => {
-    await setPersistence(auth, browserLocalPersistence) // Persist across sessions
+    await setPersistence(auth, browserLocalPersistence)
     return signInWithEmailAndPassword(auth, email, password)
   }
 
@@ -53,8 +53,6 @@ export function AuthProvider({ children }) {
       profileImage: profile.profileImage || '',
       email: email,
     })
-
-    // onAuthStateChanged will set user
   }
 
   const logout = () => signOut(auth)

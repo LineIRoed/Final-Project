@@ -28,7 +28,7 @@ export default function Profile() {
 
   useEffect(() => {
     setSelectedAvatar(user?.profileImage || '')
-    setDob(user?.dob || '') // if you want to store dob too
+    setDob(user?.dob || '')
   }, [user])
   
   const calculateAge = (dobString) => {
@@ -57,7 +57,7 @@ export default function Profile() {
     try {
       const age = calculateAge(dob)
       const userRef = doc(db, 'users', user.uid)
-      await updateDoc(userRef, { age, dob }) // save both dob and calculated age if desired
+      await updateDoc(userRef, { age, dob })
       setUser({ ...user, age, dob })
       setMessage('Profile updated successfully.')
     } catch (err) {

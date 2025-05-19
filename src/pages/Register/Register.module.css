@@ -4,11 +4,11 @@
 }
   
 .valid {
-    color: #4caf50; /* green */
+    color: #4caf50;
 }
   
 .invalid {
-    color: #f44336; /* red */
+    color: #f44336;
 }
 
 /* -------- */

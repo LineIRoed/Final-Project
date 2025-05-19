@@ -14,7 +14,7 @@ export default function Home() {
 
   const { searchQuery } = useContext(SearchContext)
 
-  // Filter movies by search query (case-insensitive)
+  // Filter movies by search query
   const filtered = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   )

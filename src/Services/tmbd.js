@@ -1,3 +1,4 @@
+// Fetching movies from API
 const API_KEY = '4e461f739d78e77d2d7f16407e3db2c7'
 const BASE_URL = 'https://api.themoviedb.org/3'
 

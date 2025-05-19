@@ -2,9 +2,8 @@ import { useEffect, useState, useContext } from 'react'
 import styles from './Banner.module.css'
 export default function Banner({ movies }) {
   
-  const [index, setIndex] = useState(0) // <-- Add this line!
+  const [index, setIndex] = useState(0)
 
-  // Early return for loading state
   if (!movies || movies.length === 0) {
     return <div>Loading...</div>
   }
@@ -14,7 +13,6 @@ export default function Banner({ movies }) {
       setIndex((prev) => (prev + 1) % movies.length)
     }, 3000)
 
-    // Cleanup the interval when the component unmounts or movies change
     return () => clearInterval(interval)
   }, [movies.length])
 
