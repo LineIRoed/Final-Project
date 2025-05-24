@@ -13,6 +13,7 @@ const randomSeed = () => Math.random().toString(36).substring(2, 10)
 
 export default function Profile() {
   const { user, setUser } = useContext(AuthContext)
+
   const [avatarSeed, setAvatarSeed] = useState('')
   const [dob, setDob] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -40,20 +41,9 @@ export default function Profile() {
     return age
   }
 
-  const handleAvatarShuffle = async () => {
+  const handleAvatarShuffle = () => {
     const newSeed = randomSeed()
-    const newAvatar = generateAvatarUrl(newSeed)
     setAvatarSeed(newSeed)
-
-    try {
-      const userRef = doc(db, 'users', user.uid)
-      await updateDoc(userRef, { profileImage: newAvatar })
-      setUser({ ...user, profileImage: newAvatar })
-      setMessage('Avatar updated successfully.')
-    } catch (err) {
-      console.error(err)
-      setError('Failed to update avatar.')
-    }
   }
 
   const handleProfileSave = async () => {
@@ -61,9 +51,11 @@ export default function Profile() {
     setError('')
     try {
       const age = calculateAge(dob)
+      const newAvatar = generateAvatarUrl(avatarSeed)
+
       const userRef = doc(db, 'users', user.uid)
-      await updateDoc(userRef, { age, dob })
-      setUser({ ...user, age, dob })
+      await updateDoc(userRef, { age, dob, profileImage: newAvatar })
+      setUser({ ...user, age, dob, profileImage: newAvatar })
       setMessage('Profile updated successfully.')
     } catch (err) {
       setError('Failed to update profile.')

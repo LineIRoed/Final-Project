@@ -62,3 +62,16 @@
     justify-content: center;
     align-items: center;
 }
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 2rem;
+    border: 2px solid var(--color-magenta);
+    background-color: var(--color-white-hover);
+}
+.avatar:hover {
+    border: 2px solid var(--color-white);
+}
+  

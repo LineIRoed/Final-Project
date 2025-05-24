@@ -56,6 +56,15 @@ export default function Navbar() {
       </div>
 
       <div className={styles.right}>
+        {user && user.profileImage && (
+          <Link to="/profile">
+            <img
+              src={user.profileImage}
+              alt="Profile Avatar"
+              className={styles.avatar}
+            />
+          </Link>
+        )}
         {user ? (
           <Button onClick={handleLogout} className={styles.signInOut}>
             Sign Out
