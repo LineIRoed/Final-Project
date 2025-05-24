@@ -10,7 +10,7 @@
 .profileContainer {
     background-color: var(--color-magenta);
     width: 50%;
-    height: 75vh;
+    height: 80vh;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -134,7 +134,18 @@
 .passwordBtn:hover {
     background-color: var(--color-white-hover);
 }
-
+.validation {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.valid {
+    color: green;
+}  
+.invalid {
+    color: red;
+}
+  
 /* ---------- */
 
 .success {

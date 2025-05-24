@@ -62,14 +62,28 @@ export default function Profile() {
     }
   }
 
+  const getPasswordValidation = (password) => ({
+    length: password.length >= 8,
+    uppercase: /[A-Z]/.test(password),
+    symbol: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password),
+  })
+  const validation = getPasswordValidation(newPassword)
+
+  
+
   const handlePasswordChange = async () => {
     setMessage('')
     setError('')
-    if (!newPassword || newPassword.length < 6) {
-      setError('Password must be at least 6 characters.')
+  
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
+  
+    if (!passwordRegex.test(newPassword)) {
+      setError(
+        'Password must be at least 8 characters, include an uppercase letter and a symbol.'
+      )
       return
     }
-
+  
     try {
       await updatePassword(auth.currentUser, newPassword)
       setNewPassword('')
@@ -82,6 +96,7 @@ export default function Profile() {
       }
     }
   }
+  
 
   if (!user) return <p>Loading user info...</p>
 
@@ -139,6 +154,19 @@ export default function Profile() {
                   className={styles.passwordInput}
                 />
               </label>
+
+              <div className={styles.validation}>
+                <p className={validation.length ? styles.valid : styles.invalid}>
+                    {validation.length ? '✅' : '❌'} At least 8 characters
+                </p>
+                <p className={validation.uppercase ? styles.valid : styles.invalid}>
+                    {validation.uppercase ? '✅' : '❌'} Contains an uppercase letter
+                </p>
+                <p className={validation.symbol ? styles.valid : styles.invalid}>
+                    {validation.symbol ? '✅' : '❌'} Contains a symbol (e.g. @, #, !)
+                </p>
+              </div>
+              
 
               <button onClick={handlePasswordChange} className={styles.passwordBtn}>Change Password</button>
 
