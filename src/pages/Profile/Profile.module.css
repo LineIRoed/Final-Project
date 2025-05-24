@@ -48,33 +48,15 @@
     margin-bottom: 1rem;
     border: 2px solid var(--color-white-hover);
 }
-  
-.avatarOptions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+.shuffleButton {
+    margin-top: 0.5rem;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-white);
 }
   
-.avatarOption {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.2s ease;
+.shuffleButton:hover {
+   background-color: var(--color-white-hover);
 }
-  
-.avatarOption:hover {
-    border-color: var(--color-white-hover);
-}
-  
-.selected {
-    border-color: var(--color-white);
-}
-
 /* -------- */
   
 .containerInfo {

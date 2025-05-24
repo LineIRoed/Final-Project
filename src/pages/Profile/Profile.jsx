@@ -6,31 +6,29 @@ import { updatePassword } from 'firebase/auth'
 import styles from './Profile.module.css'
 import Button from '../../components/Buttons/Buttons'
 
-const avatarOptions = [
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=avatar1',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=avatar2',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=avatar3',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=avatar4',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=ninjabear',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=astrocat',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=moonwalker',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=cyberduck',
-  'https://api.dicebear.com/7.x/adventurer/svg?seed=robotron',
-]
+const generateAvatarUrl = (seed) =>
+  `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
+
+const randomSeed = () => Math.random().toString(36).substring(2, 10)
 
 export default function Profile() {
   const { user, setUser } = useContext(AuthContext)
-  const [selectedAvatar, setSelectedAvatar] = useState(user?.profileImage || '')
+  const [avatarSeed, setAvatarSeed] = useState('')
   const [dob, setDob] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
   useEffect(() => {
-    setSelectedAvatar(user?.profileImage || '')
-    setDob(user?.dob || '')
+    if (user?.profileImage) {
+      const match = user.profileImage.match(/seed=([^&]+)/)
+      setAvatarSeed(match ? match[1] : randomSeed())
+    }
+    if (user?.dob) {
+      setDob(user.dob)
+    }
   }, [user])
-  
+
   const calculateAge = (dobString) => {
     const today = new Date()
     const birthDate = new Date(dobString)
@@ -42,13 +40,20 @@ export default function Profile() {
     return age
   }
 
-  const handleAvatarChange = async (avatarUrl) => {
-    if (!user) return
-    const userRef = doc(db, 'users', user.uid)
-    await updateDoc(userRef, { profileImage: avatarUrl })
-    setUser({ ...user, profileImage: avatarUrl })
-    setSelectedAvatar(avatarUrl)
-    setMessage('Avatar updated successfully.')
+  const handleAvatarShuffle = async () => {
+    const newSeed = randomSeed()
+    const newAvatar = generateAvatarUrl(newSeed)
+    setAvatarSeed(newSeed)
+
+    try {
+      const userRef = doc(db, 'users', user.uid)
+      await updateDoc(userRef, { profileImage: newAvatar })
+      setUser({ ...user, profileImage: newAvatar })
+      setMessage('Avatar updated successfully.')
+    } catch (err) {
+      console.error(err)
+      setError('Failed to update avatar.')
+    }
   }
 
   const handleProfileSave = async () => {
@@ -95,19 +100,14 @@ export default function Profile() {
 
         <div className={styles.profileContentContainer}>
           <div className={styles.containerAvatar}>
-            <img src={selectedAvatar || '/default-avatar.png'} alt="Profile Avatar" className={styles.avatar} />
-            <h3>Change Avatar</h3>
-            <div className={styles.avatarOptions}>
-              {avatarOptions.map((avatar) => (
-                <img
-                  key={avatar}
-                  src={avatar}
-                  alt="avatar option"
-                  className={`${styles.avatarOption} ${selectedAvatar === avatar ? styles.selected : ''}`}
-                  onClick={() => handleAvatarChange(avatar)}
-                />
-              ))}
-            </div>
+            <img
+              src={generateAvatarUrl(avatarSeed)}
+              alt="Profile Avatar"
+              className={styles.avatar}
+            />
+            <Button onClick={handleAvatarShuffle} className={styles.shuffleButton}>
+              Shuffle Avatar
+            </Button>
           </div>
 
           <div className={styles.containerInfo}>
@@ -119,7 +119,7 @@ export default function Profile() {
                 <p><strong className={styles.infoTitle}>Email:</strong><br /> {user.email}</p>
               </li>
             </ul>
-            
+
             <label className={styles.ageInputContainer}>
               <strong className={styles.infoTitle}>Date of Birth:</strong>
               <input
@@ -153,6 +153,7 @@ export default function Profile() {
               {message && <p className={styles.success}>{message}</p>}
               {error && <p className={styles.error}>{error}</p>}
             </div>
+
             <Button onClick={handleProfileSave} className={styles.saveBtn}>Save Profile</Button>
           </div>
         </div>
