@@ -15,7 +15,7 @@
     background-color: var(--color-magenta);
     border-radius: 20px;
     width: 30%;
-    height: 50%;
+    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,5 +71,35 @@ input {
     color: #FF0D0D;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
-  }
+}
+
+/* ---------- */
+
+.forgotPassword {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    text-align: right;
+}
+  
+.resetBtn {
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    background: none;
+}
+  
+.resetBtn:hover {
+    color: var(--color-white-hover);
+    border: none;
+    background: none;
+}
+  
+.resetStatus {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #4caf50;
+}
+  
   

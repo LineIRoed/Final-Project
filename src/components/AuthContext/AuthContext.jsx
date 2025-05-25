@@ -40,10 +40,14 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = async (email, password) => {
-    await setPersistence(auth, browserLocalPersistence)
-    return signInWithEmailAndPassword(auth, email, password)
+    try {
+      await setPersistence(auth, browserLocalPersistence)
+      return await signInWithEmailAndPassword(auth, email, password)
+    } catch (err) {
+      throw err
+    }
   }
-
+  
   const register = async (email, password, profile) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     const uid = userCredential.user.uid

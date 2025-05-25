@@ -3,6 +3,9 @@ import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
 import styles from './Login.module.css'
 import Button from '../../components/Buttons/Buttons'
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { auth } from '../../firebaseConfig'
+
 
 export default function Login() {
   const { login } = useContext(AuthContext)
@@ -13,6 +16,27 @@ export default function Login() {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  const [resetStatus, setResetStatus] = useState('')
+
+  const handlePasswordReset = async () => {
+    setResetStatus('')
+    if (!email) {
+      setResetStatus('Please enter your email above first.')
+      return
+    }
+  
+    try {
+      await sendPasswordResetEmail(auth, email)
+      setResetStatus('Password reset email sent. Check your inbox.')
+    } catch (err) {
+      if (err.code === 'auth/user-not-found') {
+        setResetStatus('No account found with this email.')
+      } else {
+        setResetStatus('Failed to send reset email. Try again later.')
+      }
+    }
+  }
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -73,6 +97,14 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          <p className={styles.forgotPassword}>
+            <Button type="button" onClick={handlePasswordReset} className={styles.resetBtn}>
+              Forgot Password?
+            </Button>
+          </p>
+          {resetStatus && <p className={styles.resetStatus}>{resetStatus}</p>}
+
 
           <Button className={styles.loginBtn} type="submit" disabled={isLoading}>
             {isLoading ? 'Loading...' : 'Login'}
