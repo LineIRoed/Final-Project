@@ -15,4 +15,24 @@
     left: 40px;
     color: var(--color-magenta);
 }
+
+/* Responsive design */
+@media screen and (max-width: 474px) {
+    .titleOverlay {
+        left: 30px;
+    }
+}
+@media screen and (max-width: 318px) {
+    .titleOverlay {
+        left: 20px;
+        text-align: center;
+    }
+}
+@media screen and (max-width: 268px) {
+    .titleOverlay {
+        left: 10px;
+        text-align: center;
+    }
+}
+
   
