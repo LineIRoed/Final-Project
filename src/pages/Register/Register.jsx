@@ -67,15 +67,16 @@ export default function Register() {
 
     setIsLoading(true)
     try {
-      await register(email, password, {
-        name,
-        profileImage: avatarUrl,
-      })
+      await register(email, password, { name, profileImage: avatarUrl })
       navigate('/')
     } catch (err) {
-      setError(err.message)
-    } finally {
-      setIsLoading(false)
+      if (err.code === 'auth/email-already-in-use') {
+        setError('An account with this email already exists.')
+      } else if (err.code === 'auth/weak-password') {
+        setError('Password is too weak.')
+      } else {
+        setError('Registration failed. Please try again.')
+      }
     }
   }
   

@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore'
 import { auth, db } from '../../firebaseConfig'
 
+// ✅ Create and export the context
 export const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
@@ -35,7 +36,7 @@ export function AuthProvider({ children }) {
       }
       setLoading(false)
     })
-  
+
     return () => unsubscribe()
   }, [])
 
@@ -47,19 +48,29 @@ export function AuthProvider({ children }) {
       throw err
     }
   }
-  
-  const register = async (email, password, profile) => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-    const uid = userCredential.user.uid
 
-    await setDoc(doc(db, 'users', uid), {
-      name: profile.name,
-      profileImage: profile.profileImage || '',
-      email: email,
-    })
+  const register = async (email, password, profile) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const uid = userCredential.user.uid
+      await setDoc(doc(db, 'users', uid), {
+        name: profile.name,
+        profileImage: profile.profileImage || '',
+        email: email,
+      })
+    } catch (err) {
+      throw err
+    }
   }
 
-  const logout = () => signOut(auth)
+  const logout = async () => {
+    try {
+      await signOut(auth)
+    } catch (err) {
+      console.error('Logout failed:', err)
+      throw err
+    }
+  }
 
   return (
     <AuthContext.Provider value={{ user, setUser, login, register, logout, loading }}>

@@ -14,8 +14,13 @@ export default function Navbar() {
   if (loading) return <div>Loading...</div>
 
   const handleLogout = async () => {
-    await logout()
-    navigate("/login")
+    try {
+      await logout()
+      navigate('/login')
+    } catch (err) {
+      alert('Failed to log out. Please try again.')
+    }
+    
   }
 
   const handleSignInClick = () => {
