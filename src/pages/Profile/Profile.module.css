@@ -10,7 +10,7 @@
 .profileContainer {
     background-color: var(--color-magenta);
     width: 50%;
-    height: 80vh;
+    height: 70vh;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -64,7 +64,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     width: 50%;
-    border: 1px solid var(--color-white-hover);
+    border: 2px solid var(--color-white-hover);
     padding: 1rem;
 }
 .liContainer {
@@ -118,12 +118,15 @@
     justify-content: center;
     align-items: center;
 }
+h3 {
+    padding-bottom: 1rem;
+}
 .passwordInput {
     margin-top: 0.5rem;
     padding: 0.5rem;
     border-radius: 10px;
     margin-top: 0.5rem;
-    width: 100%;
+    width: 50%;
     border: 2px solid var(--color-white-hover);
 }
 .passwordBtn {
@@ -171,4 +174,3 @@
 .saveBtn:hover {
     background-color: var(--color-white-hover);
 }
-  

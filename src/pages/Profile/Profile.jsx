@@ -5,6 +5,8 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { updatePassword } from 'firebase/auth'
 import styles from './Profile.module.css'
 import Button from '../../components/Buttons/Buttons'
+import Modal from '../../components/PasswordModal/PasswordModal.jsx'
+
 
 const generateAvatarUrl = (seed) =>
   `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
@@ -19,6 +21,7 @@ export default function Profile() {
   const [newPassword, setNewPassword] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
 
   useEffect(() => {
     if (user?.profileImage) {
@@ -144,9 +147,18 @@ export default function Profile() {
               </p>
             )}
 
-            <div className={styles.passwordContainer}>
-              <label className={styles.passwordInputContainer}>
-                <strong className={styles.infoTitle}>New Password:</strong>
+            <Button onClick={() => setShowPasswordModal(true)} className={styles.passwordBtn}>
+              Change Password
+            </Button>
+
+            <Button onClick={handleProfileSave} className={styles.saveBtn}>Save Profile</Button>
+
+            <Modal isOpen={showPasswordModal} onClose={() => setShowPasswordModal(false)}>
+              
+              <h3>Change Password</h3>
+              <label className={styles.passwordLabel}>
+                New Password:
+                <br />
                 <input
                   type="password"
                   value={newPassword}
@@ -157,24 +169,24 @@ export default function Profile() {
 
               <div className={styles.validation}>
                 <p className={validation.length ? styles.valid : styles.invalid}>
-                    {validation.length ? '✅' : '❌'} At least 8 characters
+                  {validation.length ? '✅' : '❌'} At least 8 characters
                 </p>
                 <p className={validation.uppercase ? styles.valid : styles.invalid}>
-                    {validation.uppercase ? '✅' : '❌'} Contains an uppercase letter
+                  {validation.uppercase ? '✅' : '❌'} Contains an uppercase letter
                 </p>
                 <p className={validation.symbol ? styles.valid : styles.invalid}>
-                    {validation.symbol ? '✅' : '❌'} Contains a symbol (e.g. @, #, !)
+                  {validation.symbol ? '✅' : '❌'} Contains a symbol (e.g. @, #, !)
                 </p>
               </div>
-              
 
-              <button onClick={handlePasswordChange} className={styles.passwordBtn}>Change Password</button>
+              <Button onClick={handlePasswordChange} className={styles.saveBtn}>
+                Update Password
+              </Button>
 
               {message && <p className={styles.success}>{message}</p>}
               {error && <p className={styles.error}>{error}</p>}
-            </div>
+            </Modal>
 
-            <Button onClick={handleProfileSave} className={styles.saveBtn}>Save Profile</Button>
           </div>
         </div>
       </div>
