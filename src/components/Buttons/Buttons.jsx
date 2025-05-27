@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./buttons.module.css";
+import styles from "./Buttons.module.css";
 
 // Button component that renders a customizable button
 const Button = ({ children, onClick, className,}) => {
