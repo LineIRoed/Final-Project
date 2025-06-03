@@ -171,8 +171,7 @@ h3 {
 .saveBtn {
     margin-top: 1.5rem;
     background-color: var(--color-white);
-    border: 1px solid var(--color-white);
-    
+    border: 1px solid var(--color-white); 
 }
 .saveBtn:hover {
     background-color: var(--color-white-hover);
@@ -223,7 +222,7 @@ h3 {
     }
     .containerInfo {
         width: 90%;
-        height: 50%;
+        height: 60%;
     }
     .passwordBtn {
         margin-top: var(--padding-medium);
@@ -236,5 +235,24 @@ h3 {
     .emailText {
         word-break: break-word;
         overflow-wrap: anywhere;
+    }
+}
+@media screen and (max-width: 270px ) {
+    .profileContentContainer {
+        width: 100%;
+    }
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+    .input {
+        width: 80%;
+    }
+    .containerInfo {
+        width: 100%;
+        padding: 0;
+    }
+    .containerAvatar {
+        width: 100%;
     }
 }
