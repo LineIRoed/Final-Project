@@ -18,6 +18,7 @@
     align-items: center;
     color: var(--color-white);
     padding: var(--padding-small);
+    border: 2px solid var(--color-white-hover);
 }
 .profileContentContainer { 
     display: flex;
@@ -93,7 +94,7 @@
     padding: 0.5rem;
     border-radius: 10px;
     margin-top: 0.5rem;
-    width: 50%;
+    width: 60%;
     border: 2px solid var(--color-white-hover);
 }
 

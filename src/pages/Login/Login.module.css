@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid var(--color-white-hover);
 }
 .logInForm {
     display: flex;
@@ -100,6 +101,12 @@ input {
     margin-top: 0.5rem;
     font-size: 0.85rem;
     color: #4caf50;
+}
+
+/* ---------- */
+.resetText {
+    padding-bottom: 1rem;
+    color: var(--color-white);
 }
   
   

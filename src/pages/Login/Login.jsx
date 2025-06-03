@@ -5,6 +5,7 @@ import styles from './Login.module.css'
 import Button from '../../components/Buttons/Buttons'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
+import Modal from '../../components/Modal/Modal'
 
 
 export default function Login() {
@@ -15,8 +16,9 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-
+  
   const [resetStatus, setResetStatus] = useState('')
+  const [showResetModal, setShowResetModal] = useState(false)
 
   const handlePasswordReset = async () => {
     setResetStatus('')
@@ -27,7 +29,7 @@ export default function Login() {
   
     try {
       await sendPasswordResetEmail(auth, email)
-      setResetStatus('Password reset email sent. Check your inbox.')
+      setShowResetModal(true) // ✅ show modal
     } catch (err) {
       if (err.code === 'auth/user-not-found') {
         setResetStatus('No account found with this email.')
@@ -36,6 +38,7 @@ export default function Login() {
       }
     }
   }
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -72,10 +75,6 @@ export default function Login() {
   }
 
   const { user } = useContext(AuthContext)
-
-  useEffect(() => {
-    if (user) navigate('/')
-  }, [user])
 
   return (
     <div className={styles.logInContainer}>
@@ -115,6 +114,13 @@ export default function Login() {
           </p>
         </form>
       </div>
+      <Modal isOpen={showResetModal} onClose={() => setShowResetModal(false)}>
+        <h3>Password Reset Sent</h3>
+        <p className={styles.resetText}>We've sent a password reset link to your email.</p>
+        <Button onClick={() => setShowResetModal(false)} className={styles.loginBtn}>
+          OK
+        </Button>
+      </Modal>
     </div>
   )
 }
