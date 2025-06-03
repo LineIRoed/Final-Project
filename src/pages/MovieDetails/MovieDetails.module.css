@@ -7,20 +7,28 @@
     background-color: var(--color-lightBlack);
     gap: 2rem;
     width: 100%;
-    height: 90vh;
+    height: auto;
     justify-content: space-between;
 }
   
+/* --------- */
+
 .poster {
     width: auto;
     height: 80vh;
     border-radius: 10px;
+    max-width: 100%;
+    object-fit: cover;
 }
+
+/* --------- */
+
 .infoContainer {
     display: flex;
     flex-direction: column;
     width: 50%;
 }
+  
 .movieInfo {
     max-width: 100%;
 }
@@ -33,7 +41,6 @@
     margin: 0.5rem 0;
 }
 
-/* ------- */
 .addBtn {
     display: flex;
     flex-direction: row;
@@ -43,15 +50,96 @@
     margin-top: 2rem;
     margin-bottom: 1.5rem;
 }
-
-/* ---------- */
+ 
+/* --------- */
 
 .trailerHeading {
     margin-bottom: 1rem;
 }
+  
 .movieTrailer {
-    width:500px;
-    height:255px; 
-    /* må ha 245px differanse mellom bredde og høyde */
+    width: 500px;
+    height: 255px;
+    border-radius: 8px;
 }
-    
+  
+/* Responsive design */
+
+@media screen and (max-width: 1670px) {
+    .infoContainer {
+        width: 45%;
+    }
+}  
+
+@media screen and (max-width: 1200px) {
+    .poster {
+      height: 60vh;
+    }
+  
+    .movieTrailer {
+      width: 100%;
+      height: 220px;
+    }
+  
+    .infoContainer {
+      width: 45%;
+    }
+}
+  
+@media screen and (max-width: 950px) {
+    .poster {
+      height: 50vh;
+    }
+  
+    .infoContainer {
+      width: 100%;
+    }
+  
+    .movieTrailer {
+      height: 200px;
+    }
+}
+  
+@media screen and (max-width: 768px) {
+    .movieContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .poster {
+      width: 100%;
+      height: auto;
+    }
+  
+    .infoContainer {
+      width: 100%;
+      text-align: center;
+      padding: 1rem 0;
+    }
+  
+    .movieTrailer {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+    .addBtnContainer {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+}
+  
+@media screen and (max-width: 480px) {
+    .movieInfo h1 {
+      font-size: 1.5rem;
+    }
+  
+    .movieInfo p {
+      font-size: 0.9rem;
+    }
+  
+    .addBtn {
+      flex-direction: column;
+    }
+}
+  
