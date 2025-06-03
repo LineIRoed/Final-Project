@@ -7,6 +7,7 @@
     justify-content: center;
     align-items: center;
 }
+  
 .profileContainer {
     background-color: var(--color-magenta);
     width: 50%;
@@ -20,17 +21,19 @@
     padding: var(--padding-small);
     border: 2px solid var(--color-white-hover);
 }
-.profileContentContainer { 
+  
+.profileContentContainer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: top;
+    align-items: flex-start;
     width: 90%;
     padding-top: var(--padding-small);
+    gap: 1rem;
 }
 
-/* -------- */
-  
+/* ---------- */
+
 .containerAvatar {
     display: flex;
     flex-direction: column;
@@ -40,7 +43,22 @@
     padding: 1rem;
     justify-content: center;
     align-items: center;
+    height: 40vh;
 }
+.containerInfo {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    border: 2px solid var(--color-white-hover);
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+}
+
+/* -------- */
+
 .avatar {
     width: 150px;
     height: 150px;
@@ -49,6 +67,7 @@
     margin-bottom: 1rem;
     border: 2px solid var(--color-white-hover);
 }
+  
 .shuffleButton {
     margin-top: 0.5rem;
     background-color: var(--color-white);
@@ -56,33 +75,25 @@
 }
   
 .shuffleButton:hover {
-   background-color: var(--color-white-hover);
+    background-color: var(--color-white-hover);
 }
+
 /* -------- */
-  
-.containerInfo {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 50%;
-    border: 2px solid var(--color-white-hover);
-    padding: 1rem;
-}
+
 .liContainer {
     list-style: none;
     display: flex;
     flex-direction: column;
     text-align: center;
     gap: 1rem;
-    text-wrap: wrap;
     width: 100%;
+    word-break: break-word;
 }
+  
 .infoTitle {
     font-size: var(--font-medium);
 }
-
-/* ---------- */
-
+  
 .ageInputContainer {
     margin: 1rem;
     display: flex;
@@ -99,15 +110,16 @@
     width: 70%;
     border: 2px solid var(--color-white-hover);
 }
-
+  
 .displayAge {
     margin-top: -0.5rem;
     text-align: center;
 }
+  
+/* -------- */
 
-/* --------- */
-
-.passwordContainer {
+.passwordContainer,
+.passwordInputContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -115,45 +127,45 @@
     padding: var(--padding-small);
     gap: 0.5rem;
 }
-.passwordInputContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+  
 h3 {
     padding-bottom: 1rem;
 }
+  
 .passwordInput {
     margin-top: 0.5rem;
     padding: 0.5rem;
     border-radius: 10px;
-    margin-top: 0.5rem;
     width: 50%;
     border: 2px solid var(--color-white-hover);
 }
+  
 .passwordBtn {
     margin-top: 0.5rem;
     background-color: var(--color-white);
     border: 1px solid var(--color-white);
 }
+  
 .passwordBtn:hover {
     background-color: var(--color-white-hover);
 }
+  
+/* -------- */
+
 .validation {
     margin-top: 0.5rem;
     font-size: 0.9rem;
     text-align: center;
 }
+  
 .valid {
     color: green;
-}  
+}
+  
 .invalid {
     color: red;
 }
   
-/* ---------- */
-
 .success {
     color: #4caf50;
     margin-top: 1rem;
@@ -171,91 +183,55 @@ h3 {
 .saveBtn {
     margin-top: 1.5rem;
     background-color: var(--color-white);
-    border: 1px solid var(--color-white); 
+    border: 1px solid var(--color-white);
 }
+  
 .saveBtn:hover {
     background-color: var(--color-white-hover);
 }
-
+  
 /* Responsive design */
-@media screen and (max-width: 989px ) {
+@media screen and (max-width: 901px) {
     .profileContainer {
-        width: 70%;
+      width: 90%;
+      height: auto;
     }
-}
-@media screen and (max-width: 704px ) {
-    .profileContainer {
-        width: 90%;
+  
+    .profileContentContainer {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
-}
-@media screen and (max-width: 547px ) {
-    .input {
-        width: 100%;
-    }
-    .passwordBtn {
-        width: 80%;
-    }
-    .saveBtn {
-        width: 80%;
-    }
+  
+    .containerAvatar,
     .containerInfo {
-        align-items: center;
+      width: 100%;
+      height: auto;
     }
-    .profileContainer {
-        height: 80vh;
-    }
-    .liContainer {
-        width: 90%;
-    }
-}
-@media screen and (max-width: 546px ) {
-    .profileContentContainer {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-        height: 90%;
-    }
-    .containerAvatar {
-        width: 90%;
-        height: 40%;
-    }
-    .containerInfo {
-        width: 90%;
-        height: 60%;
-    }
-    .passwordBtn {
-        margin-top: var(--padding-medium);
-    }
-    .profileContentContainer {
-        width: 100%;
-    }
-}
-@media screen and (max-width: 309px ) {
-    .emailText {
-        word-break: break-word;
-        overflow-wrap: anywhere;
-    }
-}
-@media screen and (max-width: 270px ) {
-    .profileContentContainer {
-        width: 100%;
-        flex-direction: column;
-    }
+  
     .avatar {
-        width: 100px;
-        height: 100px;
+      width: 120px;
+      height: 120px;
     }
-    .input {
-        width: 80%;
+  
+    .input,
+    .passwordInput,
+    .passwordBtn,
+    .saveBtn {
+      width: fit-content;
     }
-    .containerInfo {
-        width: 100%;
-        padding: 0;
-        flex-direction: column;
+  
+    .liContainer {
+      width: 100%;
+      text-align: center;
     }
-    .containerAvatar {
-        width: 100%;
-        flex-direction: column;
+}
+
+@media screen and (max-width: 244px) {
+    .input,
+    .passwordInput,
+    .passwordBtn,
+    .saveBtn {
+      font-size: var(--font-small);
     }
 }
