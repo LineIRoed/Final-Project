@@ -115,7 +115,7 @@ export default function Login() {
         </form>
       </div>
       <Modal isOpen={showResetModal} onClose={() => setShowResetModal(false)}>
-        <h3>Password Reset Sent</h3>
+        <h3 className={styles.resetHeader}>Password Reset Sent</h3>
         <p className={styles.resetText}>We've sent a password reset link to your email.</p>
         <Button onClick={() => setShowResetModal(false)} className={styles.loginBtn}>
           OK

@@ -57,6 +57,8 @@ input {
     justify-content: center;
     align-items: center;
     padding-top: 2rem;
+    text-wrap: wrap;
+    text-align: center;
 }
 .registerLink {
     color: var(--color-white);
@@ -110,3 +112,52 @@ input {
 }
   
   
+/* Responsive design */
+@media screen and (max-width: 1075px) {
+    .formContainer {
+        height: 60%;
+        width: 40%;
+    }   
+}
+@media screen and (max-width: 775px) {
+    .formContainer {
+        height: 60%;
+        width: 50%;
+    }  
+}
+@media screen and (max-width: 605px) {
+    .formContainer {
+        height: 60%;
+        width: 60%;
+    }   
+}
+@media screen and (max-width: 469px) {
+    .formContainer {
+        height: 60%;
+        width: 70%;
+    }   
+}
+@media screen and (max-width: 385px) {
+    .formContainer {
+        height: 60%;
+        width: 90%;
+    }   
+}
+@media screen and (max-width: 355px) {
+    .resetHeader {
+        padding-top: var(--padding-small);
+    }
+}
+@media screen and (max-width: 278px) {
+    input {
+        width: 80%;
+    }
+    .resetBtn {
+        font-size: var(--font-small);
+    }
+}
+@media screen and (max-width: 235px) {
+    .formContainer {
+        width: 100%;
+    }
+}

@@ -27,4 +27,41 @@
     font-size: 1.5rem;
     cursor: pointer;
 }
-  
+
+/* Responsive design */
+@media screen and (max-width: 976px) {
+    .modal {
+        width: 40%;
+    } 
+}
+@media screen and (max-width: 724px) {
+    .modal {
+        width: 50%;
+    } 
+}
+@media screen and (max-width: 553px) {
+    .modal {
+        width: 70%;
+    } 
+}
+@media screen and (max-width: 409px) {
+    .modal {
+        width: 80%;
+    } 
+}
+@media screen and (max-width: 355px) {
+    .modal {
+        width: 90%;
+        height: 25%;
+    } 
+}
+@media screen and (max-width: 251px) {
+    .modal {
+        height: 30%;
+    } 
+}
+@media screen and (max-width: 176px) {
+    .modal {
+        height: 35%;
+    } 
+}
