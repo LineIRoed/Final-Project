@@ -240,6 +240,7 @@ h3 {
 @media screen and (max-width: 270px ) {
     .profileContentContainer {
         width: 100%;
+        flex-direction: column;
     }
     .avatar {
         width: 100px;
@@ -251,8 +252,10 @@ h3 {
     .containerInfo {
         width: 100%;
         padding: 0;
+        flex-direction: column;
     }
     .containerAvatar {
         width: 100%;
+        flex-direction: column;
     }
 }
