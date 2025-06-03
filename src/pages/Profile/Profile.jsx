@@ -123,10 +123,10 @@ export default function Profile() {
           <div className={styles.containerInfo}>
             <ul className={styles.liContainer}>
               <li className={styles.liItem}>
-                <p><strong className={styles.infoTitle}>Name:</strong><br /> {user.name}</p>
+                <p><strong className={styles.infoTitle}>Name:</strong ><br/> {user.name}</p>
               </li>
               <li className={styles.liItem}>
-                <p><strong className={styles.infoTitle}>Email:</strong><br /> {user.email}</p>
+                <p className={styles.emailText}><strong className={styles.infoTitle}>Email:</strong> <br /> {user.email}</p>
               </li>
             </ul>
 

@@ -74,6 +74,8 @@
     flex-direction: column;
     text-align: center;
     gap: 1rem;
+    text-wrap: wrap;
+    width: 100%;
 }
 .infoTitle {
     font-size: var(--font-medium);
@@ -94,7 +96,7 @@
     padding: 0.5rem;
     border-radius: 10px;
     margin-top: 0.5rem;
-    width: 60%;
+    width: 70%;
     border: 2px solid var(--color-white-hover);
 }
 
@@ -174,4 +176,65 @@ h3 {
 }
 .saveBtn:hover {
     background-color: var(--color-white-hover);
+}
+
+/* Responsive design */
+@media screen and (max-width: 989px ) {
+    .profileContainer {
+        width: 70%;
+    }
+}
+@media screen and (max-width: 704px ) {
+    .profileContainer {
+        width: 90%;
+    }
+}
+@media screen and (max-width: 547px ) {
+    .input {
+        width: 100%;
+    }
+    .passwordBtn {
+        width: 80%;
+    }
+    .saveBtn {
+        width: 80%;
+    }
+    .containerInfo {
+        align-items: center;
+    }
+    .profileContainer {
+        height: 80vh;
+    }
+    .liContainer {
+        width: 90%;
+    }
+}
+@media screen and (max-width: 546px ) {
+    .profileContentContainer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 90%;
+    }
+    .containerAvatar {
+        width: 90%;
+        height: 40%;
+    }
+    .containerInfo {
+        width: 90%;
+        height: 50%;
+    }
+    .passwordBtn {
+        margin-top: var(--padding-medium);
+    }
+    .profileContentContainer {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 309px ) {
+    .emailText {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
 }
