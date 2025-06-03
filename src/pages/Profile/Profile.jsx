@@ -7,7 +7,6 @@ import styles from './Profile.module.css'
 import Button from '../../components/Buttons/Buttons'
 import Modal from '../../components/PasswordModal/PasswordModal.jsx'
 
-
 const generateAvatarUrl = (seed) =>
   `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
 
@@ -19,8 +18,10 @@ export default function Profile() {
   const [avatarSeed, setAvatarSeed] = useState('')
   const [dob, setDob] = useState('')
   const [newPassword, setNewPassword] = useState('')
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
+  const [profileMessage, setProfileMessage] = useState('')
+  const [profileError, setProfileError] = useState('')
+  const [passwordMessage, setPasswordMessage] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const [showPasswordModal, setShowPasswordModal] = useState(false)
 
   useEffect(() => {
@@ -50,8 +51,8 @@ export default function Profile() {
   }
 
   const handleProfileSave = async () => {
-    setMessage('')
-    setError('')
+    setProfileMessage('')
+    setProfileError('')
     try {
       const age = calculateAge(dob)
       const newAvatar = generateAvatarUrl(avatarSeed)
@@ -59,9 +60,9 @@ export default function Profile() {
       const userRef = doc(db, 'users', user.uid)
       await updateDoc(userRef, { age, dob, profileImage: newAvatar })
       setUser({ ...user, age, dob, profileImage: newAvatar })
-      setMessage('Profile updated successfully.')
+      setProfileMessage('Profile updated successfully.')
     } catch (err) {
-      setError('Failed to update profile.')
+      setProfileError('Failed to update profile.')
     }
   }
 
@@ -72,34 +73,28 @@ export default function Profile() {
   })
   const validation = getPasswordValidation(newPassword)
 
-  
-
   const handlePasswordChange = async () => {
-    setMessage('')
-    setError('')
-  
+    setPasswordMessage('')
+    setPasswordError('')
+
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
-  
     if (!passwordRegex.test(newPassword)) {
-      setError(
-        'Password must be at least 8 characters, include an uppercase letter and a symbol.'
-      )
+      setPasswordError('Password must be at least 8 characters, include an uppercase letter and a symbol.')
       return
     }
-  
+
     try {
       await updatePassword(auth.currentUser, newPassword)
       setNewPassword('')
-      setMessage('Password updated successfully.')
+      setPasswordMessage('Password updated successfully.')
     } catch (err) {
       if (err.code === 'auth/requires-recent-login') {
-        setError('Please log in again to change your password.')
+        setPasswordError('Please log in again to change your password.')
       } else {
-        setError('Failed to update password.')
+        setPasswordError('Failed to update password.')
       }
     }
   }
-  
 
   if (!user) return <p>Loading user info...</p>
 
@@ -151,10 +146,16 @@ export default function Profile() {
               Change Password
             </Button>
 
-            <Button onClick={handleProfileSave} className={styles.saveBtn}>Save Profile</Button>
+            <Button onClick={handleProfileSave} className={styles.saveBtn}>
+              Save Profile
+            </Button>
 
+            {/* Profile Save Messages */}
+            {profileMessage && <p className={styles.success}>{profileMessage}</p>}
+            {profileError && <p className={styles.error}>{profileError}</p>}
+
+            {/* Password Modal */}
             <Modal isOpen={showPasswordModal} onClose={() => setShowPasswordModal(false)}>
-              
               <h3>Change Password</h3>
               <label className={styles.passwordLabel}>
                 New Password:
@@ -183,10 +184,9 @@ export default function Profile() {
                 Update Password
               </Button>
 
-              {message && <p className={styles.success}>{message}</p>}
-              {error && <p className={styles.error}>{error}</p>}
+              {passwordMessage && <p className={styles.success}>{passwordMessage}</p>}
+              {passwordError && <p className={styles.error}>{passwordError}</p>}
             </Modal>
-
           </div>
         </div>
       </div>
