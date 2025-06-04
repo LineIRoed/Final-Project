@@ -66,6 +66,6 @@ Link to avatar database: https://www.dicebear.com/introduction/
 Link to figma file: https://www.figma.com/design/DBaSpFVwLgRmiyVYUMYOQY/Final-Project-frontend?node-id=0-1&t=doiBJDaCETsvmSof-1
 
 
-I have used chatGpt to add comments, and to help me add the avatar functionality. I have done this because avatars was not something i had any previous experience with.
+<!-- I have used chatGpt to add comments, and to help me add the avatar functionality. I have done this because avatars was not something i had any previous experience with.
 
-The project-documentation.pdf would not open in the root directory, i have therefor placed it in the src directory. Hope this is ok?
+The project-documentation.pdf would not open in the root directory, i have therefor placed it in the src directory. Hope this is ok? -->
