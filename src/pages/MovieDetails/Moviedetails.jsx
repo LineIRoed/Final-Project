@@ -1,3 +1,4 @@
+// Imports
 import { useEffect, useState, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import styles from './MovieDetails.module.css'
@@ -7,28 +8,34 @@ import { db } from '../../firebaseConfig'
 import { doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
+// TMDB API key
 const API_KEY = '4e461f739d78e77d2d7f16407e3db2c7'
 
 export default function MovieDetails() {
   const { user } = useContext(AuthContext)
   const { id } = useParams()
+  const navigate = useNavigate()
+
+  // State variables
   const [movie, setMovie] = useState(null)
   const [trailer, setTrailer] = useState(null)
   const [isInWatchlist, setIsInWatchlist] = useState(false)
 
-  const navigate = useNavigate()
-
+  // Fetch movie details and trailer on mount
   useEffect(() => {
     const fetchMovie = async () => {
+      // Get main movie details
       const res = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
       )
       const data = await res.json()
       setMovie(data)
 
+      // Get videos (trailers, teasers, etc.)
       const trailerRes = await fetch(
         `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`
       )
+      // Find first trailer
       const trailerData = await trailerRes.json()
       setTrailer(trailerData.results.find(video => video.type === 'Trailer'))
     }
@@ -36,7 +43,7 @@ export default function MovieDetails() {
     fetchMovie()
   }, [id])
 
-  // Check if movie is already in watchlist
+  // Check if movie is in user's watchlist when user or movie changes
   useEffect(() => {
     if (!user || !movie) {
       setIsInWatchlist(false)
@@ -50,6 +57,7 @@ export default function MovieDetails() {
     checkWatchlist()
   }, [user, movie])
 
+  // Add/remove movie from watchlist
   const toggleWatchlist = async () => {
     if (!user) {
       alert('Please log in to manage your watchlist.')
@@ -78,19 +86,23 @@ export default function MovieDetails() {
     }
   }
 
+  // Go back to the previous page
   const handleBack = () => {
     navigate(-1)
   }
 
+  // Show loading state while movie data is being fetched
   if (!movie) return <p>Loading...</p>
 
   return (
     <div className={styles.movieContainer}>
+      {/* Movie Poster */}
       <img
         className={styles.poster}
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
       />
+      {/* Movie Info and Actions */}
       <div className={styles.infoContainer}>
         <div className={styles.movieInfo}>
           <h1>{movie.title}</h1>
@@ -99,6 +111,7 @@ export default function MovieDetails() {
           <p><strong>Release Date:</strong> {movie.release_date}</p>
           <p><strong>Rating:</strong> ⭐ {movie.vote_average}/10</p>
         </div>
+        {/* Watchlist Button */}
         <div className={styles.addBtnContainer}>
           <Button
             className={styles.addBtn}
@@ -110,6 +123,7 @@ export default function MovieDetails() {
             {isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
           </Button>
         </div>
+        {/* Trailer Embed */}
         {trailer && (
           <div className={styles.trailerContainer}>
             <h2 className={styles.trailerHeading}>Watch the Trailer</h2>
@@ -124,6 +138,7 @@ export default function MovieDetails() {
           </div>
         )}
       </div>
+      {/* Back Button */}
       <div className={styles.backBtnContainer}>
         <Button className={styles.backButton} onClick={handleBack}>← Back</Button>
       </div>

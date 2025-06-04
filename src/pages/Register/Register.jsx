@@ -1,9 +1,12 @@
+// React hooks and context
 import { useState, useContext } from 'react'
 import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
+// Styles and UI components
 import styles from './Register.module.css'
 import Button from '../../components/Buttons/Buttons'
 
+// Fallback avatar image options (not used directly in avatar generation)
 const profileImageOptions = [
   '/avatars/avatar1.png',
   '/avatars/avatar2.png',
@@ -11,6 +14,7 @@ const profileImageOptions = [
   '/avatars/avatar4.png',
 ]
 
+// Password validation rules
 const getPasswordValidation = (password) => {
   return {
     length: password.length >= 8,
@@ -23,11 +27,17 @@ export default function Register() {
   const { register } = useContext(AuthContext)
   const navigate = useNavigate()
 
+  // Form field states
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
+  
+  // Avatar state
   const [profileImage, setProfileImage] = useState(profileImageOptions[0])
+  const [avatarSeed, setAvatarSeed] = useState(randomSeed())
+
+  // Feedback and validation states
   const [error, setError] = useState('')
   const validation = getPasswordValidation(password)
   const [isLoading, setIsLoading] = useState(false)
@@ -35,28 +45,30 @@ export default function Register() {
   // Avatar selection has been created using chatGpt
   const generateAvatarUrl = (seed) =>
     `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
-
-
-  const randomSeed = () =>
-    Math.random().toString(36).substring(2, 10)
-
-  const [avatarSeed, setAvatarSeed] = useState(randomSeed())
   const avatarUrl = generateAvatarUrl(avatarSeed)
 
 
+  // Generates a random string for avatar seed
+  const randomSeed = () =>
+    Math.random().toString(36).substring(2, 10)
+
+   // Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    // Field completeness and basic validation
     if (!email || !password || !confirmPassword || !name) {
       setError('Please fill out all required fields.')
       return
     }
 
+    // Password confirmation check
     if (password !== confirmPassword) {
       setError('Passwords do not match.')
       return
     }
 
+    // Password pattern validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
     if (!passwordRegex.test(password)) {
       setError(
@@ -65,11 +77,13 @@ export default function Register() {
       return
     }
 
+    // Call registration function from context
     setIsLoading(true)
     try {
       await register(email, password, { name, profileImage: avatarUrl })
       navigate('/')
     } catch (err) {
+      // Handle Firebase Auth errors
       if (err.code === 'auth/email-already-in-use') {
         setError('An account with this email already exists.')
       } else if (err.code === 'auth/weak-password') {
@@ -88,6 +102,7 @@ export default function Register() {
                 <h2 className={styles.formHeader}>Create Account</h2>
                 {error && <p className={styles.error}>{error}</p>}
 
+                {/* Avatar preview and shuffle button */}
                 <div className={styles.avatarContainer}>
                   <img src={avatarUrl} alt="avatar" className={styles.avatarPreview} />
                   <Button
@@ -99,6 +114,7 @@ export default function Register() {
                   </Button>
                 </div>
 
+                {/* Input fields */}
                 <input
                     type="text"
                     placeholder="Full Name"
@@ -126,6 +142,8 @@ export default function Register() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
+
+                {/* Password validation checklist */}
                 <div className={styles.validation}>
                     <p className={validation.length ? styles.valid : styles.invalid}>
                         • At least 8 characters
@@ -138,11 +156,12 @@ export default function Register() {
                     </p>
                 </div>
 
-
+                {/* Submit button */}
                 <Button type="submit" disabled={isLoading} className={styles.registerBtn}>
                     {isLoading ? 'Registering...' : 'Register'}
                 </Button>
 
+                {/* Link to login page */}
                 <p className={styles.LogIn}>
                     Already have an account? <br/> <Link to="/login" className={styles.logInLink}>Login here</Link>
                 </p>

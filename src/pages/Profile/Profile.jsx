@@ -1,3 +1,4 @@
+// Imports
 import { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../../components/AuthContext/AuthContext'
 import { auth, db } from '../../firebaseConfig'
@@ -7,9 +8,11 @@ import styles from './Profile.module.css'
 import Button from '../../components/Buttons/Buttons'
 import Modal from '../../components/PasswordModal/PasswordModal.jsx'
 
+// Helper function to generate avatar URL using Dicebear API
 const generateAvatarUrl = (seed) =>
   `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
 
+// Helper to generate a random seed for avatars
 const randomSeed = () => Math.random().toString(36).substring(2, 10)
 
 export default function Profile() {
@@ -24,6 +27,7 @@ export default function Profile() {
   const [passwordError, setPasswordError] = useState('')
   const [showPasswordModal, setShowPasswordModal] = useState(false)
 
+  // Initialize avatar and date of birth from user context
   useEffect(() => {
     if (user?.profileImage) {
       const match = user.profileImage.match(/seed=([^&]+)/)
@@ -34,6 +38,7 @@ export default function Profile() {
     }
   }, [user])
 
+  // Calculate age from date of birth
   const calculateAge = (dobString) => {
     const today = new Date()
     const birthDate = new Date(dobString)
@@ -45,11 +50,13 @@ export default function Profile() {
     return age
   }
 
+  // Change avatar by generating a new seed
   const handleAvatarShuffle = () => {
     const newSeed = randomSeed()
     setAvatarSeed(newSeed)
   }
 
+  // Save updated profile info to Firestore and update local context
   const handleProfileSave = async () => {
     setProfileMessage('')
     setProfileError('')
@@ -66,6 +73,7 @@ export default function Profile() {
     }
   }
 
+  // Validate password input
   const getPasswordValidation = (password) => ({
     length: password.length >= 8,
     uppercase: /[A-Z]/.test(password),
@@ -73,6 +81,7 @@ export default function Profile() {
   })
   const validation = getPasswordValidation(newPassword)
 
+  // Handle password change request
   const handlePasswordChange = async () => {
     setPasswordMessage('')
     setPasswordError('')
@@ -96,6 +105,7 @@ export default function Profile() {
     }
   }
 
+  // Show loading message if user context is not ready
   if (!user) return <p>Loading user info...</p>
 
   return (
@@ -104,6 +114,7 @@ export default function Profile() {
         <h2>Your Profile</h2>
 
         <div className={styles.profileContentContainer}>
+          {/* Avatar Display & Shuffle Button */}
           <div className={styles.containerAvatar}>
             <img
               src={generateAvatarUrl(avatarSeed)}
@@ -115,6 +126,7 @@ export default function Profile() {
             </Button>
           </div>
 
+          {/* Profile Info Section */}
           <div className={styles.containerInfo}>
             <ul className={styles.liContainer}>
               <li className={styles.liItem}>
@@ -125,6 +137,7 @@ export default function Profile() {
               </li>
             </ul>
 
+            {/* Date of Birth Input */}
             <label className={styles.ageInputContainer}>
               <strong className={styles.infoTitle}>Date of Birth:</strong>
               <input
@@ -136,16 +149,19 @@ export default function Profile() {
               />
             </label>
 
+            {/* Display Calculated Age */}
             {user.age && (
               <p className={styles.displayAge}>
                 <strong className={styles.infoTitle}>Age:</strong> {user.age} years
               </p>
             )}
 
+            {/* Password Change Button */}
             <Button onClick={() => setShowPasswordModal(true)} className={styles.passwordBtn}>
               Change Password
             </Button>
 
+            {/* Save Profile Button */}
             <Button onClick={handleProfileSave} className={styles.saveBtn}>
               Save Profile
             </Button>
@@ -154,7 +170,7 @@ export default function Profile() {
             {profileMessage && <p className={styles.success}>{profileMessage}</p>}
             {profileError && <p className={styles.error}>{profileError}</p>}
 
-            {/* Password Modal */}
+            {/* Change password Modal */}
             <Modal isOpen={showPasswordModal} onClose={() => setShowPasswordModal(false)}>
               <h3>Change Password</h3>
               <label className={styles.passwordLabel}>
@@ -168,6 +184,7 @@ export default function Profile() {
                 />
               </label>
 
+              {/* Password Requirements */}
               <div className={styles.validation}>
                 <p className={validation.length ? styles.valid : styles.invalid}>
                   {validation.length ? '✅' : '❌'} At least 8 characters
@@ -180,10 +197,12 @@ export default function Profile() {
                 </p>
               </div>
 
+              {/* Submit Password Change */}
               <Button onClick={handlePasswordChange} className={styles.saveBtn}>
                 Update Password
               </Button>
 
+              {/* Password Change Feedback */}
               {passwordMessage && <p className={styles.success}>{passwordMessage}</p>}
               {passwordError && <p className={styles.error}>{passwordError}</p>}
             </Modal>
