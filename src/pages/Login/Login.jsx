@@ -7,16 +7,15 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import Modal from '../../components/Modal/Modal'
 
-
 export default function Login() {
-  const { login } = useContext(AuthContext)
+  const { login, user } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const [resetStatus, setResetStatus] = useState('')
   const [showResetModal, setShowResetModal] = useState(false)
 
@@ -26,10 +25,10 @@ export default function Login() {
       setResetStatus('Please enter your email above first.')
       return
     }
-  
+
     try {
       await sendPasswordResetEmail(auth, email)
-      setShowResetModal(true) // ✅ show modal
+      setShowResetModal(true)
     } catch (err) {
       if (err.code === 'auth/user-not-found') {
         setResetStatus('No account found with this email.')
@@ -38,20 +37,20 @@ export default function Login() {
       }
     }
   }
-  
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
 
     if (!email || !password) {
-      setError('Please fill out both email and password')
+      setError('Please fill out both email and password.')
       return
     }
 
     setIsLoading(true)
     try {
       await login(email, password)
-      setTimeout(() => navigate('/'), 500)
+      // do not navigate here — wait for user context update
     } catch (err) {
       switch (err.code) {
         case 'auth/invalid-email':
@@ -74,7 +73,12 @@ export default function Login() {
     }
   }
 
-  const { user } = useContext(AuthContext)
+  // ✅ Redirect when user becomes available
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [user])
 
   return (
     <div className={styles.logInContainer}>
@@ -104,19 +108,21 @@ export default function Login() {
           </p>
           {resetStatus && <p className={styles.resetStatus}>{resetStatus}</p>}
 
-
           <Button className={styles.loginBtn} type="submit" disabled={isLoading}>
             {isLoading ? 'Loading...' : 'Login'}
           </Button>
 
           <p className={styles.register}>
-            Don’t have an account? <br/> <Link to="/register" className={styles.registerLink}>Register here</Link>
+            Don’t have an account? <br />
+            <Link to="/register" className={styles.registerLink}>Register here</Link>
           </p>
         </form>
       </div>
+
+      {/* Password Reset Modal */}
       <Modal isOpen={showResetModal} onClose={() => setShowResetModal(false)}>
         <h3 className={styles.resetHeader}>Password Reset Sent</h3>
-        <p className={styles.resetText}>We've sent a password reset link to your email.</p>
+        <p className={styles.resetText}>We’ve sent a password reset link to your email.</p>
         <Button onClick={() => setShowResetModal(false)} className={styles.loginBtn}>
           OK
         </Button>
