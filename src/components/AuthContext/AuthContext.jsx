@@ -1,3 +1,4 @@
+// Import React hooks and Firebase modules
 import { createContext, useEffect, useState } from 'react'
 import {
   onAuthStateChanged,
@@ -14,13 +15,15 @@ import {
 } from 'firebase/firestore'
 import { auth, db } from '../../firebaseConfig'
 
-// ✅ Create and export the context
+// Create and export the AuthContext for use in other components
 export const AuthContext = createContext()
 
+// AuthProvider component to manage authentication state
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
+  // Runs once on component mount to check auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
@@ -40,6 +43,7 @@ export function AuthProvider({ children }) {
     return () => unsubscribe()
   }, [])
 
+  // Function to log in an existing user
   const login = async (email, password) => {
     try {
       await setPersistence(auth, browserLocalPersistence)
@@ -48,7 +52,8 @@ export function AuthProvider({ children }) {
       throw err
     }
   }
-
+ 
+  // Function to register a new user and save profile to Firestore
   const register = async (email, password, profile) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
@@ -63,6 +68,7 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Function to log out the current user
   const logout = async () => {
     try {
       await signOut(auth)
@@ -72,6 +78,7 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Provide auth context values to child components
   return (
     <AuthContext.Provider value={{ user, setUser, login, register, logout, loading }}>
       {loading ? <p>Loading...</p> : children}

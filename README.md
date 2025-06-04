@@ -57,7 +57,7 @@ If you have any questions or suggestions, feel free to reach out to me at [anro0
 
 Link to github repository: https://github.com/LineIRoed/Final-Project.git
 
-link to netlify deployment: 
+link to netlify deployment: https://flixio-streaming.netlify.app/
 
 Link to TMDB movie database API: https://developer.themoviedb.org/docs/getting-started
 
