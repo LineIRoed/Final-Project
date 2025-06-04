@@ -25,7 +25,6 @@ const getPasswordValidation = (password) => {
 
 export default function Register() {
   const { register } = useContext(AuthContext)
-  const navigate = useNavigate()
 
   // Form field states
   const [email, setEmail] = useState('')
@@ -33,6 +32,10 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
   
+  // Generates a random string for avatar seed
+  const randomSeed = () =>
+    Math.random().toString(36).substring(2, 10)
+
   // Avatar state
   const [profileImage, setProfileImage] = useState(profileImageOptions[0])
   const [avatarSeed, setAvatarSeed] = useState(randomSeed())
@@ -47,10 +50,7 @@ export default function Register() {
     `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
   const avatarUrl = generateAvatarUrl(avatarSeed)
 
-
-  // Generates a random string for avatar seed
-  const randomSeed = () =>
-    Math.random().toString(36).substring(2, 10)
+  const navigate = useNavigate()
 
    // Form submission handler
   const handleSubmit = async (e) => {

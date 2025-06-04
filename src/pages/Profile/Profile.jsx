@@ -8,10 +8,12 @@ import styles from './Profile.module.css'
 import Button from '../../components/Buttons/Buttons'
 import Modal from '../../components/PasswordModal/PasswordModal.jsx'
 
+// I have used chatGpt here
 // Helper function to generate avatar URL using Dicebear API
 const generateAvatarUrl = (seed) =>
   `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}`
 
+// I have used chatGpt here
 // Helper to generate a random seed for avatars
 const randomSeed = () => Math.random().toString(36).substring(2, 10)
 
@@ -27,6 +29,7 @@ export default function Profile() {
   const [passwordError, setPasswordError] = useState('')
   const [showPasswordModal, setShowPasswordModal] = useState(false)
 
+  // I have used chatGpt here
   // Initialize avatar and date of birth from user context
   useEffect(() => {
     if (user?.profileImage) {
@@ -50,6 +53,7 @@ export default function Profile() {
     return age
   }
 
+  // I have used chatGpt here
   // Change avatar by generating a new seed
   const handleAvatarShuffle = () => {
     const newSeed = randomSeed()
@@ -113,7 +117,9 @@ export default function Profile() {
       <div className={styles.profileContainer}>
         <h2>Your Profile</h2>
 
+
         <div className={styles.profileContentContainer}>
+          {/* I have used chatGpt here */}
           {/* Avatar Display & Shuffle Button */}
           <div className={styles.containerAvatar}>
             <img
